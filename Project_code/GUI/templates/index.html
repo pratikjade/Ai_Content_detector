@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Content Detector</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>AI Content Detector</h1>
+    <form id="text-analysis-form">
+        <textarea id="text" name="text" placeholder="Enter your text here"></textarea>
+        <button type="submit">Analyze</button>
+        <div id="result"></div>
+        <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    </form>
+    
+</body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Text Analysis</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <h1>Text Analysis</h1>
+
+  <form action="/analyze" method="POST">
+    <textarea name="text" placeholder="Enter text to analyze"></textarea>
+    <input type="submit" value="Analyze">
+  </form>
+
+  <div id="results">
+
+  </div>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html> -->

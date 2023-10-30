@@ -1,0 +1,82 @@
+/* Apply a black background to the entire page */
+body {
+    background-color: #000;
+    color: #00FF00;
+    /* Green text color */
+    font-family: Arial, sans-serif;
+}
+
+#text-analysis-form {
+    width: 432.925px;
+    height: 370.07px;
+    max-width: 500px; /* Adjust as needed */
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+    border-radius: 15px; /* Curved edges */
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5); /* Green box shadow */
+  }
+
+/* Center the title */
+h1 {
+    text-align: center;
+    flex-shrink: 0;
+    color: #509F57;
+    font-family: Inter;
+    font-size: 27.873px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 27.803px; /* 155.556% */
+}
+
+
+/* Style the text area */
+textarea {
+    display: flex;
+    width: 413.925px;
+    height: 270.82px;
+    padding: 18.87px 7.818px;
+    align-items: flex-start;
+    gap: 7.896px;
+    flex-shrink: 0;
+    align-self: stretch;
+    border-radius: 7.896px;
+    border: 0.987px solid #DADADA;
+    background: #FFF;
+    box-shadow: 0px 0.98697px 1.97393px 0px rgba(16, 24, 40, 0.05);
+    margin-bottom: 10px;
+}
+
+/* Style the "Analyze" button */
+button {
+    
+    color: #FFF;
+    font-family: Inter;
+    font-size: 15.887px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 23.831px; /* 150% */
+    display: flex;
+    padding: 9.929px 17.873px;
+    justify-content: center;
+    align-items: center;
+    gap: 7.944px;
+    flex: 1 0 0;
+    border-radius: 7.944px;
+    border: 0.993px solid #509F57;
+    background: #509F57;
+    box-shadow: 0px 0.99295px 1.98589px 0px rgba(16, 24, 40, 0.05);
+}
+
+/* Style the result div */
+#result {
+    float: right;
+    margin-top: -35px;
+    text-align: right;
+    color: #E30F0F;
+    font-family: Inter;
+    font-size: 15.887px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 34.753px; /* 218.75% */
+}
