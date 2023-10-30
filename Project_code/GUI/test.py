@@ -38,6 +38,7 @@ st.title("AI detector")
 text = st.text_area("Enter some text")
 
 # Perform prediction if text is provided
-if text:
+if st.button('analaize', type="primary"):
+    st.button("Reset")
     result = predict(text)
     st.json(result)
