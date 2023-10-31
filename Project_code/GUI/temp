@@ -1,0 +1,57 @@
+st.set_page_config(
+    page_title="AI Detector",
+    page_icon="✅",
+    layout="wide",
+)
+st.title("AI Detector")
+
+# Use HTML to create a heading
+st.markdown("<h1 style='text-align:center;'>Detect AI Content</h1>", unsafe_allow_html=True)
+
+# Add some space
+st.markdown("<br>", unsafe_allow_html=True)
+
+# Create a text input with a label
+text = st.text_area("Enter some text", height=100)
+
+# Add space between input and button
+st.markdown("<br>", unsafe_allow_html=True)
+
+# Use CSS to style the button
+button_style = """
+    <style>
+        div.stButton > button:first-child {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+        }
+        div.stButton > button:first-child:hover {
+            background-color: #45a049;
+        }
+    </style>
+"""
+st.markdown(button_style, unsafe_allow_html=True)
+
+# Create a button to trigger the analysis
+if st.button("Analyze"):
+    result = predict(text)
+    st.markdown("<hr>", unsafe_allow_html=True)
+    st.markdown("<h2>Analysis Result:</h2>", unsafe_allow_html=True)
+
+    if result[0]['label'] == 'AI':
+        label_color = "color: #4CAF50;"
+    else:
+        label_color = "color: #FF5733;"
+
+    # Use HTML to style the prediction result
+    result_html = f"<p style='font-size: 20px; font-weight: bold; {label_color}'>Predicted Label: {result[0]['label']}</p>"
+    score_html = f"<p style='font-size: 16px;'>Confidence Score: {result[0]['score']:.2%}</p>"
+    st.markdown(result_html, unsafe_allow_html=True)
+
+    # Add a status bar for the Confidence Score with percentages
+    score_html = f"<p style='font-size: 16px;'>Confidence Score: {result[0]['score']}</p>"
+    st.markdown(score_html, unsafe_allow_html=True)
+    st.markdown("<h2>Status Bar for Confidence Score:</h2>", unsafe_allow_html=True)
+    st.progress(result[0]['score'])
