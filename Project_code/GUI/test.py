@@ -34,7 +34,7 @@ def predict(text):
 # Create a Streamlit app
 st.set_page_config(
     page_title="AI Detector",
-    page_icon="✅",
+    page_icon="🤖",
     layout="wide",
 )
 
