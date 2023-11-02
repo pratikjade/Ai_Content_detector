@@ -1,57 +1,169 @@
+import streamlit as st
+import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import ExtraTreesClassifier
+
+# Load and preprocess the data
+# Replace 'your_dataset.csv' with the actual file path
+data = pd.read_csv('dataset.csv')
+vectorizer = TfidfVectorizer()
+X = vectorizer.fit_transform(data['text'])
+y = data['label']
+
+# Train the model
+classifier = ExtraTreesClassifier(n_estimators=50,random_state=2)
+classifier.fit(X, y)
+
+# Define the prediction function
+def predict(text):
+    text_vectorized = vectorizer.transform([text])
+    prediction = classifier.predict(text_vectorized)[0]
+    if prediction == 'AI':
+        score = classifier.predict_proba(text_vectorized)[0][0]
+    else:
+        score = 1 - classifier.predict_proba(text_vectorized)[0][1]
+    response = [
+        {
+            'label': prediction,
+            'score': round(float(score), 4)
+            
+        }
+    ]
+    return response
+
+
+# Create a Streamlit app
 st.set_page_config(
     page_title="AI Detector",
-    page_icon="✅",
+    page_icon="🤖",
     layout="wide",
 )
-st.title("AI Detector")
+page_bg_img = """
+<style>
+[data-testid="stAppViewContainer"] {
+    background-image: url("https://images.unsplash.com/photo-1660914256311-918659fae88f?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+[data-testid="stHeader"] {
+    background-color: transparent;
+}
 
-# Use HTML to create a heading
-st.markdown("<h1 style='text-align:center;'>Detect AI Content</h1>", unsafe_allow_html=True)
-
-# Add some space
-st.markdown("<br>", unsafe_allow_html=True)
-
-# Create a text input with a label
-text = st.text_area("Enter some text", height=100)
-
-# Add space between input and button
-st.markdown("<br>", unsafe_allow_html=True)
-
-# Use CSS to style the button
-button_style = """
-    <style>
-        div.stButton > button:first-child {
-            background-color: #4CAF50;
-            color: white;
-            font-size: 18px;
-            border: none;
-            cursor: pointer;
-        }
-        div.stButton > button:first-child:hover {
-            background-color: #45a049;
-        }
-    </style>
+data-testid="stToolbar"{
+right: 2rem;
+}
+</style>
 """
-st.markdown(button_style, unsafe_allow_html=True)
+st.markdown(page_bg_img, unsafe_allow_html=True)
 
-# Create a button to trigger the analysis
-if st.button("Analyze"):
-    result = predict(text)
-    st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown("<h2>Analysis Result:</h2>", unsafe_allow_html=True)
 
-    if result[0]['label'] == 'AI':
-        label_color = "color: #4CAF50;"
-    else:
-        label_color = "color: #FF5733;"
+# Initialize session state
+if 'started' not in st.session_state:
+    st.session_state.started = False
 
-    # Use HTML to style the prediction result
-    result_html = f"<p style='font-size: 20px; font-weight: bold; {label_color}'>Predicted Label: {result[0]['label']}</p>"
-    score_html = f"<p style='font-size: 16px;'>Confidence Score: {result[0]['score']:.2%}</p>"
-    st.markdown(result_html, unsafe_allow_html=True)
+# Check if the "Get Started" button is clicked
+if not st.session_state.started:
+    st.session_state.started = False
+# Check if the "Get Started" button is clicked
+if not st.session_state.started:
+    st.markdown("<div style='display: flex; justify-content: center; align-items: center; height: 50vh;'><h1>Welcome to AI Detector</h1></div>", unsafe_allow_html=True)
+    st.markdown("")
+    columns = st.columns((3,1,3))
+# Use custom CSS to style the button
+    st.markdown(
+        """
+        <style>
+            .custom-button .stButton > button {
+                margin-top: -50px;
+                
+            }
+        </style>    
+        """,
+        unsafe_allow_html=True
+    )
+    button_pressed = """
+        <style>
+            div.stButton > button:first-child {
+                background-color: #CF0A0A;
+                width: 200px;
+                Height: 70px;  
+                color: white;
+                border: none;
+                cursor: pointer;
+            }
+            div.stButton > button:first-child:hover {
+                background-color: #DC5F00;
+            }
+        </style>
+    """
+    st.markdown(button_pressed, unsafe_allow_html=True)
 
-    # Add a status bar for the Confidence Score with percentages
-    score_html = f"<p style='font-size: 16px;'>Confidence Score: {result[0]['score']}</p>"
-    st.markdown(score_html, unsafe_allow_html=True)
-    st.markdown("<h2>Status Bar for Confidence Score:</h2>", unsafe_allow_html=True)
-    st.progress(result[0]['score'])
+    button_pressed = columns[1].button("Get Started", key="get_started_button", on_click=lambda: st.session_state.__setitem__('started', True))
+    if button_pressed:
+        st.session_state.started = True
+
+# If the app has been started
+if st.session_state.started:
+    st.markdown("")
+
+    # Use HTML to create a heading in the main app
+    st.markdown("<h1 style='text-align:center;height: 15vh;'>Detect AI Content</h1>", unsafe_allow_html=True)
+
+    # Add some space
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    # Create a text input with a label
+    text = st.text_area("Enter some text", placeholder="Type your text here", height=100)
+
+    # Add space between input and button
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    # Use CSS to style the button
+    button_style = """
+        <style>
+            div.stButton > button:first-child {
+                background-color: #4CAF50;
+                color: white;
+                font-size: 18px;
+                border: none;
+                cursor: pointer;
+            }
+            div.stButton > button:first-child:hover {
+                background-color: #45a049;
+            }
+        </style>
+    """
+    st.markdown(button_style, unsafe_allow_html=True)
+
+    # Create a button to trigger the analysis
+    if st.button("Analyze"):
+        result = predict(text)
+        st.markdown("<hr>", unsafe_allow_html=True)
+        st.markdown("<h2>Analysis Result:</h2>", unsafe_allow_html=True)
+
+        if result[0]['label'] == 'AI':
+            label_color = "color: #FF5733;"
+            progress_color = "#FF5733"
+        else:
+            label_color = "color: #4CAF50;"
+            progress_color = "#4CAF50"
+
+        # Use HTML to style the prediction result
+        result_html = f"<p style='font-size: 25px; font-weight: bold; {label_color}'>Predicted Label: {result[0]['label']}</p>"
+        st.markdown(result_html, unsafe_allow_html=True)
+
+        # Add a status bar for the Confidence Score with percentages
+        confidence_percentage = result[0]['score'] * 100
+        score_html = f"<p style='font-size: 20px;{label_color}'>Probability this written by {result[0]['label']} is {confidence_percentage}</p>"
+        st.markdown(score_html, unsafe_allow_html=True)
+        progress_bar_css = f"""
+        <style>
+            .stProgress > div > div > div > div {{
+                background-color: {progress_color};
+            }}
+        </style>
+        """
+        st.markdown(progress_bar_css, unsafe_allow_html=True)
+        st.progress(result[0]['score'])
