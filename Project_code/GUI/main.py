@@ -40,7 +40,7 @@ st.set_page_config(
 page_bg_img = """
 <style>
 [data-testid="stAppViewContainer"] {
-    background-image: url("https://images.unsplash.com/photo-1698929853765-69e78c8d5169?auto=format&fit=crop&q=80&w=1946&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-image: url("https://images.unsplash.com/photo-1698945746290-a9d1cc575e77?auto=format&fit=crop&q=80&w=1946&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -68,7 +68,7 @@ if not st.session_state.started:
 if not st.session_state.started:
     st.markdown("<h1 style='display: flex; text-align:center;justify-content: center; align-items: center; font-size: 50px ; height: 55vh;'>Welcome to AI Content Detector</h1>", unsafe_allow_html=True)
     st.markdown("")
-    columns = st.columns((20, 5, 20))
+    columns = st.columns((2, 1, 2))
 
     # Use custom CSS to style the button
 
@@ -90,6 +90,7 @@ if not st.session_state.started:
             text-transform: none;
             user-select: none;
             -webkit-user-select: none;
+            width: max-content;
             }
             div.stButton > button:first-child:hover {
                 background-color: #ffffff;
@@ -144,7 +145,7 @@ if st.session_state.started:
                 font-size: 18px;
                 border: none;
                 cursor: pointer;
-                margin-right: 23cm;
+                margin-right: 16cm;
             }
             div.stButton > button:first-child:hover {
                 background-color: #fff;
@@ -202,8 +203,8 @@ if st.session_state.started:
 
 st.markdown(
         """
-        <div style="position: absolute; bottom: -5.8cm; right: 20px;">
-            <a href='#' style="text-decoration: underline; color: #FF5733;">About</a>
+        <div style="position: absolute; bottom: -5.8cm;">
+            <b color: #000000;">Site is not optimize for mobile view.</b>
         </div>
         """,
         unsafe_allow_html=True
